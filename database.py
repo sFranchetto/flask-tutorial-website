@@ -29,3 +29,14 @@ def load_job_from_db(id):
       return None
     else:
       return job
+
+
+def add_application_to_db(job_id, data):
+  with engine.connect() as conn:
+    conn.execute(
+      text(
+        "INSERT INTO application (job_id, full_name, email, linkedin_url) VALUES (:job_id, :full_name, :email, :linkedin_url)"
+      ).params(job_id=job_id,
+               full_name=data['full_name'],
+               email=data['email'],
+               linkedin_url=data['linkedin_url']))
